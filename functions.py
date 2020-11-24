@@ -28,6 +28,21 @@ def build_candidate(node_list, substrate_node):
     return candidate
 
 
+def node_mapping(ithnode, node_cap, substrate, candidate):
+    flag = 0
+    for i in range(len(substrate)):
+        if candidate[ithnode][i] == 1:
+            substrate[i] = substrate[i] - node_cap[ithnode]
+            print('virtual node', ithnode, 'is mapped onto susbtrate node', i)
+            flag = 1    
+            for j in range(len(node_cap)):
+                candidate[j][i] = 0
+            break;
+    if flag == 0:
+        print('node mapping fail!')
+    return substrate, candidate, flag
+
+
 def read_substrate(filename):
     with open(filename, 'r') as f:#with語句自動呼叫close()方法
         Inp1_nodenum = int(f.readline())
