@@ -17,3 +17,21 @@ def take_a_VNR(VNR_list, time):
         node_cap = np.zeros(node_num)
         bw_cap = np.zeros(node_num-1)
     return arr_time, life_time, node_num, node_cap, bw_cap
+
+def read_substrate(filename):
+    with open(filename, 'r') as f:#with語句自動呼叫close()方法
+        Inp1_nodenum = int(f.readline())
+        Inp2_nodenum = int(f.readline())
+        link = np.zeros((Inp1_nodenum+Inp2_nodenum,Inp1_nodenum+Inp2_nodenum))
+        CPU = np.zeros(Inp1_nodenum+Inp2_nodenum)
+        
+        for i in range(2):
+            line = f.readline()
+            temp = line.split()
+            for j in range(len(temp)):
+                CPU[i*len(temp)+j] = int(temp[j])
+        for i in range(Inp1_nodenum+Inp2_nodenum):
+            line = f.readline()
+            link[i] = line.split()
+            
+    return CPU,link
