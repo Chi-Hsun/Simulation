@@ -18,6 +18,16 @@ def take_a_VNR(VNR_list, time):
         bw_cap = np.zeros(node_num-1)
     return arr_time, life_time, node_num, node_cap, bw_cap
 
+# build candidate list for each virtual node
+def build_candidate(node_list, substrate_node):
+    candidate = np.zeros((len(node_list), len(substrate_node)))
+    for i in range(len(node_list)):                     
+        for j in range(len(substrate_node)):
+            if substrate_node[j]>=node_list[i]:
+                candidate[i][j] = 1
+    return candidate
+
+
 def read_substrate(filename):
     with open(filename, 'r') as f:#with語句自動呼叫close()方法
         Inp1_nodenum = int(f.readline())
