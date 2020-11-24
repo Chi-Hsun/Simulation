@@ -26,6 +26,7 @@ cpu, link = read_substrate(filename)
 filename = 'virtual1123.txt'
 def read_virtual(filename):
     VNR_list = np.genfromtxt(filename)
+    VNR_list = list(VNR_list)
     return VNR_list
 VNR_list = read_virtual(filename)
 print(VNR_list)
