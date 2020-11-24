@@ -35,3 +35,8 @@ def read_substrate(filename):
             link[i] = line.split()
             
     return CPU,link
+
+def read_virtual(filename):
+    VNR_list = np.genfromtxt(filename)
+    VNR_list = list(VNR_list)
+    return VNR_list
