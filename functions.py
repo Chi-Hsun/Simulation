@@ -29,18 +29,62 @@ def build_candidate(node_list, substrate_node):
 
 
 def node_mapping(ithnode, node_cap, substrate, candidate):
-    flag = 0
+    mapped_node = -1
     for i in range(len(substrate)):
         if candidate[ithnode][i] == 1:
+            mapped_node = i
             substrate[i] = substrate[i] - node_cap[ithnode]
-            print('virtual node', ithnode, 'is mapped onto susbtrate node', i)
-            flag = 1    
+            print('virtual node', ithnode, 'is mapped onto susbtrate node', i)  
             for j in range(len(node_cap)):
                 candidate[j][i] = 0
             break;
-    if flag == 0:
+    if mapped_node == -1:
+        
         print('node mapping fail!')
-    return substrate, candidate, flag
+    return substrate, candidate, mapped_node
+
+
+
+
+#link mapping
+def shortest_path(source, des, virtual_link, substrate_link):
+    # build adjanjency list
+    adjanjency_list = np.ones((len(substrate_link), len(substrate_link)))*(-1)
+    for i in range(len(substrate_link)):
+        temp = -1
+        for j in range(len(substrate_link)):
+            if substrate_link[i][j]>=virtual_link:
+                temp = temp + 1
+                adjanjency_list[i][temp] = j
+                
+    queue = [source]
+    path = [des]
+    dis = np.ones(len(substrate_link))*(-1)
+    last_hop = np.ones(len(substrate_link))*(-1)
+    marked = np.zeros(len(substrate_link))
+    marked[source] = 1
+    while queue!=[]:
+        u = queue[0]
+        del queue[0]
+        for i in adjanjency_list[int(u)]:
+            if int(i)==-1:
+                break
+            else:
+                if marked[int(i)]==0:
+                    marked[int(i)] = 1
+                    queue.append(i)
+                    dis[int(i)] = dis[int(u)]+1
+                    last_hop[int(i)] = u
+    index = des
+    while last_hop[int(index)]!=-1:
+        path.append(int(last_hop[int(index)]))
+        index = last_hop[int(index)]
+    if last_hop[int(index)]==-1 and int(index)!=source:
+        print("unreachable!")
+        path = -1
+    
+    return path
+
 
 
 def read_substrate(filename):
