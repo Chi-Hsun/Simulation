@@ -85,7 +85,25 @@ def shortest_path(source, des, virtual_link, substrate_link):
     
     return path
 
-
+def VNR_mapping(ith, node_num, node_cap, cpu_substrate, src_node, bw_cap, substrate_link, candidate):    
+    cpu_substrate, candidate, des_node = node_mapping(ith, node_cap, cpu_substrate, candidate) 
+    print("des node = ", des_node)
+    if (des_node != -1):
+        path = shortest_path(src_node, des_node, bw_cap[ith-1], substrate_link)
+        print("path = ", path)
+        if (path != -1 ):
+            if (ith < node_num-1): # succesfully finds a path and there still exists a node unmapped                
+                print("node",ith, "is mapped to", des_node, " and the path is ", path)
+                ith = ith+1
+                print("ith = ", ith)
+                return(VNR_mapping(ith, node_num, node_cap, cpu_substrate, des_node, bw_cap, substrate_link, candidate) )
+            else:
+                print("node",ith, "is mapped to", des_node, " and the path is ", path)
+                print("Congradulations!")
+                return 0
+        else:
+            print("link mapping failed!")
+            return -1
 
 def read_substrate(filename):
     with open(filename, 'r') as f:#with語句自動呼叫close()方法
