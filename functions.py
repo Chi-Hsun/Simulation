@@ -51,7 +51,6 @@ def find_all_links(substrate_link):
     return links
 
 
-#link mapping
 def shortest_path(source, des, virtual_link, substrate_link):
     # build adjanjency list
     adjanjency_list = np.ones((len(substrate_link), len(substrate_link)))*(-1)
@@ -89,3 +88,53 @@ def shortest_path(source, des, virtual_link, substrate_link):
         path = -1
     
     return path
+
+def build_graph(bw_substrate, bw_cap):
+    graph = {}
+    for i in range(len(bw_substrate)):
+        addnode = []
+        for j in range(len(bw_substrate)):
+            if bw_substrate[i][j]>=bw_cap:
+                addnode.append(j)
+        graph[i] = addnode
+    return graph
+
+
+def depthFirst(graph, currentVertex, visited, visitedList):
+    visited.append(currentVertex)
+    for vertex in graph[currentVertex]:
+        if vertex not in visited:
+            depthFirst(graph, vertex, visited.copy(), visitedList)
+            
+    visitedList.append(visited)
+    return visitedList
+
+
+def find_all_path(src,des,visitedList):
+    path = []
+    for i in visitedList:
+        if i[-1] == des:
+            path.append(i)
+    return path
+
+
+def list_all_comb(test,all_comb):
+    out = []
+    if len(all_comb)==0:
+        for i in range(len(test[0])):
+            all_comb.append(test[0][i])
+        del test[0]
+        return list_all_comb(test, all_comb) 
+    for i in range(len(all_comb)): 
+        for j in range(len(test[0])):
+            temp = []
+            temp = all_comb[i].copy()
+            temp.append(j)
+            out.append(temp)
+    if len(test)==1:
+        return out
+    else:
+        del test[0]
+        return list_all_comb(test, out)
+
+
