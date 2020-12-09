@@ -6,6 +6,10 @@ VNR_list = read_virtual(filename_vir)
 
 
 num_of_timeslots = 5000
+total_cpu = sum(cpu_substrate)
+total_bw = sum(sum(bw_substrate))/2
+print("total cpu = ",total_cpu)
+print("total bw = ",total_bw)
 acceptance = 0
 total_cost = 0
 total_revenue = 0
@@ -15,6 +19,8 @@ revenue_array = []
 cost_array = []
 acceptance_array = []
 RC_array = []
+cpu_utilization_array = []
+bw_utilization_array = []
 
 #先找出原本substrate network裡的所有link組合
 link_pairs = list(find_all_links(bw_substrate))  
@@ -184,7 +190,8 @@ for time in range(num_of_timeslots):
                 arr_time = VNR_list[0]  
             else:
                 break
-
+    cpu_utilization_array.append(1 - sum(cpu_substrate)/total_cpu)
+    bw_utilization_array.append(1 - sum(sum(bw_substrate))/total_bw/2)
     revenue_array.append(total_revenue)
     cost_array.append(total_cost)
     if total_cost>0:
@@ -202,3 +209,5 @@ print("revenue =", revenue_array)
 print("cost =", cost_array)
 print("acceptance ratio =", acceptance_array)
 print("RC ratio = ", RC_array)
+print("CPU utilization =", cpu_utilization_array)
+print("BW utilization =", bw_utilization_array)
