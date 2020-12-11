@@ -1,3 +1,7 @@
+import VNE_func as fc
+import itertools
+import numpy as np
+
 from copy import copy, deepcopy
 filename_sub = 'substrate1130.txt'
 filename_vir = 'virtual1130.txt'
