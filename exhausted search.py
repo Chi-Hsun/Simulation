@@ -3,8 +3,8 @@ import itertools
 import numpy as np
 
 from copy import copy, deepcopy
-filename_sub = 'substrate1130.txt'
-filename_vir = 'virtual1130.txt'
+filename_sub = 'substrate1209_1.txt'
+filename_vir = 'virtual1212.txt'
 cpu_substrate, bw_substrate = read_substrate(filename_sub)
 VNR_list = read_virtual(filename_vir)
 
@@ -112,7 +112,7 @@ for time in range(num_of_timeslots):
                     #print("total path comb = ", total_path_comb)                    
                     for k in range(len(bw_cap)):
                         if total_path_comb[k]==[]:
-                            #print("link mapping fail!")
+                            print("link mapping fail!")
                             bw_check = 0
                             break
                 if node_check==1 and bw_check==1:
@@ -156,7 +156,7 @@ for time in range(num_of_timeslots):
                             #print("current link opt = ", link_opt)
                                                                 
                 if temp_best_cost == opt_cost:   #找到最佳解就停止
-                    #print("Find the opt solution ", i, ", and the best path is ", link_opt )
+                    print("Find the opt solution ", i, ", and the best path is ", link_opt )
                     break
             if temp_opt!=-1 and opt_link_index!=-1:
                 #print("temp opt = ", temp_opt)
