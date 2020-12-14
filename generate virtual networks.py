@@ -4,9 +4,9 @@
 from random import randrange
 import numpy as np
 
-fp = open("virtual1123.txt", "a")
+fp = open("virtual1213.txt", "a")
 
-timeslots = 30
+timeslots = 5000
 arrtime = 0
 for i in range(timeslots):
     num_of_arrivals = np.random.poisson(0.5)  #number of arrivals in this timeslot
@@ -15,20 +15,21 @@ for i in range(timeslots):
         fp.write(str(int(arrtime))+'\n')
         print(arrtime)
    
-        lifetime = np.random.poisson(20)  #lifetime
+        #lifetime = np.random.poisson(30)  #lifetime
+        lifetime = randrange(20, 40)+1
         fp.write(str(int(lifetime))+'\n')
         print(lifetime)
                 
-        node_num = randrange(2,5)+1    # node num
+        node_num = randrange(1,4)+1    # node num
         fp.write(str(int(node_num))+'\n')
         print(node_num)
     
         for j in range (node_num):
-            node_cap = randrange(5)+1   #CPU requirement
+            node_cap = randrange(30)+1   #CPU requirement
             fp.write(str(int(node_cap))+'\n')
             print(node_cap)
         for k in range(node_num-1):
-            bw = randrange(5)+1   #BW requirement
+            bw = randrange(10,30)+1   #BW requirement
             fp.write(str(int(bw))+'\n')
             print(bw)
     arrtime = arrtime + 1
